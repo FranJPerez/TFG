@@ -1,6 +1,14 @@
 #Todas las lineas de codigo necesarias para realizar el script completo para el modulo de blender
 
-#El primer paso metemos el objeto que deseamos biseccionar
+#Selecciono y elimino tanto la camara como la iluminacion
+bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
+bpy.context.scene.objects["Camera"].select_set(True)  #Selecciono la camara
+bpy.ops.object.delete(use_global=False) #lo elimino
+bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
+bpy.context.scene.objects["Light"].select_set(True)  #Selecciono la luz
+bpy.ops.object.delete(use_global=False) #lo elimino
+
+#El primer paso metemos el objeto que deseamos biseccionar(ESTO IRA COMO BOTON EN LA UI) Para probar puedo meter un cubo para hacer los cortes
 Falta el codigo
 
 
@@ -38,12 +46,20 @@ bpy.ops.object.delete(use_global=False) #lo elimino
 #hacer un bisect del objeto
 bpy.ops.object.editmode_toggle()#Paso al modo edicion
 bpy.ops.mesh.select_all(action='SELECT') #Selecciono todo
-numero_pieza = 0
 for j in range(20):
-  bpy.ops.mesh.bisect(plane_co=(0, 0,(10-j)/10), plane_no=(0,0,1))
+  numero_pieza = bpy.ops.mesh.bisect(plane_co=(0, 0,(10-j)/10), plane_no=(0,0,1))
+  bpy.ops.mesh.separate(type = 'SELECTED') #Separo el objeto que acabo de biseccionar y creo un nuevo objeto xxx.XXX
   bpy.ops.mesh.select_all(action='SELECT')
+  
 #Una vez cortado los trozos vamos al modo objeto
-bpy.ops.object.objectmode_toggle()
+bpy.ops.object.editmode_toggle() #Si, es el mismo comando para ir al modo objeto y al modo edicion
+numero_pieza = 1 #Creo un contadorpara las piezas 
+
+for j in range(20)
+  bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
+  bpy.context.scene.objects["Cube.*"].select_set(True)  #Selecciono el corte
+  numero_pieza =+1
+
 
 
 
