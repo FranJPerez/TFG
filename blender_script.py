@@ -58,6 +58,7 @@ numero_pieza = 1 #Creo un contadorpara las piezas
 for j in range(20)
   bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
   bpy.context.scene.objects["Cube.*"].select_set(True)  #Selecciono el corte
+  bpy.context.scene.objects["Cube"].location = (20, 20, 10) #Para mover los objetos, este funciona, esta probado
   numero_pieza =+1
 
 
