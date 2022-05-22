@@ -14,6 +14,9 @@ bpy.ops.object.delete(use_global=False)
 
 #El primer paso metemos el objeto que deseamos biseccionar(ESTO IRA COMO BOTON EN LA UI) Para probar puedo meter un cubo para hacer los cortes
 Falta el codigo
+#Creo que el objeto se va a importar desde blender no con la ui
+bpy.ops.view3d.snap_cursor_to_grid() #llevo el objeto importado al centro
+
 
 
 
@@ -56,6 +59,10 @@ bpy.ops.mesh.select_all(action='SELECT') #Selecciono todo
 for j in range(20):
   numero_pieza = bpy.ops.mesh.bisect(plane_co=(0, 0,(10-j)/10), plane_no=(0,0,1))
   bpy.ops.mesh.separate(type = 'SELECTED') #Separo el objeto que acabo de biseccionar y creo un nuevo objeto xxx.XXX
+  #ESTAS DOS INSTRUCCIONES ALOMEJOR TENGO QUE HACERLAS UNA VEZ YA SEAN OBJETOS
+  bpy.ops.object.convert(target='GPENCIL')  #Convierto el objeto a grease pencil para exportarlo a svg para inkscape
+  bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
+  ######################################
   bpy.ops.mesh.select_all(action='SELECT')
   
 #Una vez cortado los trozos vamos al modo objeto
