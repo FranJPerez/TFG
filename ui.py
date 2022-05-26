@@ -46,6 +46,7 @@ from bpy.types import (
         PropertyGroup,
         )
 
+
 #OPERATOR class
 class bisectplus(Operator):
     bl_idname = 'mesh.bisectplus'
@@ -71,7 +72,6 @@ class bisectplus(Operator):
         
         bm = bmesh.new()
         bm.from_mesh(cpobj.data)
-
         bm.faces.ensure_lookup_table()
         bm.faces[0].select = True
         
@@ -216,13 +216,13 @@ class OBJECTSELECTION_Panel(Panel):
         
         cell_props = context.window_manager.objectselection_props
         
-        obj = context.active_object
-        cell_props.bisecttarget = obj.name
-        label = box.label(text="Currently selected target:")
+        #obj = context.active_object
+        #cell_props.bisecttarget = obj.name
+        box.label(text="Select the number of cuts:")
+        box.prop(cell_props, "slices")
 
         box1 = box.box()
         box1.label(text=obj.name,icon='OBJECT_DATAMODE')
-
         cplabeltxt = "Select a cutting plane:"
         if cell_props.cuttingplane:
             cplabeltxt = "Selected cutting plane:"
@@ -236,10 +236,15 @@ class OBJECTSELECTION_Panel(Panel):
         #box.prop(cell_props, "clearinner")
         box.prop(cell_props, "clearouter")
         box.prop(cell_props, "axisthreshold")
-        
+
+        box.prop(cell_props, "slices")
+		
+		
         if cell_props.cuttingplane:
             column.separator()
             column.operator("mesh.bisectplus", icon='NONE', text="Ready to bisect")
+        column.separator()
+        column.operator("mesh.bisectplus", icon='NONE', text="Start bisection")
 
     @classmethod
     def poll(cls, context):
@@ -266,17 +271,17 @@ class ObjectSelectionProperties(PropertyGroup):
             default=True,
             )   
     
-    selectionoverride: BoolProperty(
-            name="Override selection",
-            description="Overrides your eventual selection and selects all vertices,\nthat way the bisection will go through the entire object.\n\nDon't activate if you have a manual selection!",
-            default=False,
-            )
+#    selectionoverride: BoolProperty(
+ #           name="Override selection",
+  #          description="Overrides your eventual selection and selects all vertices,\nthat way the bisection will go through the entire object.\n\nDon't activate if you have a manual selection!",
+   #         default=False,
+    #        )
 
-    fill: BoolProperty(
-            name="Fill",
-            description="Fill in the cut\nbeware of new faces if used without clear inner or outer",
-            default=False,
-            )
+#    fill: BoolProperty(
+ #           name="Fill",
+  #          description="Fill in the cut\nbeware of new faces if used without clear inner or outer",
+   #         default=False,
+    #        )
 
     #clearinner: BoolProperty(
      #       name="Clear Inner",
@@ -296,6 +301,14 @@ class ObjectSelectionProperties(PropertyGroup):
             min=1,
             max=50,
             #precision=1,
+            )
+    #Aqui creo las propiedades para la caja que he creado en la interfaz slices.
+    slices: IntProperty(
+            name="Number of slices:",
+            description="Selection of the number of slices on the vertical axis",
+            default=1,
+            min=1,
+            max=50,
             )
             
     #axisthreshold: FloatProperty(
