@@ -40,6 +40,7 @@ zSize =ob.dimensions.z
 
 ###########################################
 # Intentar meter desde la linea 20 a la 25 debajo de las dimensiones para hacer el cilindro con la altura justa.
+bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
 ##########################################
 
 #PAra aplicar el modificador booleano que crea el agujero dentro de la pieza, con el objeto que quiero agujerear ya seleccionado y el cilindro en pantalla
