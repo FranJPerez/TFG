@@ -37,6 +37,7 @@ from bpy.props import (
         StringProperty,
         FloatProperty,
         BoolProperty,
+        IntProperty,
         )
 
 from bpy.types import (
@@ -111,7 +112,7 @@ class bisectplus(Operator):
             plane_co = origin,
             plane_no = normal,
             use_fill = objectselection_props.fill,
-            clear_inner = objectselection_props.clearinner,
+            #clear_inner = objectselection_props.clearinner,
             clear_outer = objectselection_props.clearouter,
             threshold = objectselection_props.axisthreshold,
             )
@@ -179,6 +180,7 @@ class bisectplus(Operator):
             bpy.ops.object.mode_set(mode='EDIT')
 
             bpy.ops.object.vertex_group_assign()
+            """
         if objectselection_props.clearinner:
             bpy.ops.object.vertex_group_set_active(group='BackSide')
             bpy.ops.object.vertex_group_remove()
@@ -189,6 +191,7 @@ class bisectplus(Operator):
                 v.select = True
             bpy.ops.object.mode_set(mode='EDIT')
             bpy.ops.object.vertex_group_assign()
+            """
 
 
         #clean up
@@ -230,7 +233,7 @@ class OBJECTSELECTION_Panel(Panel):
         box.prop(cell_props, "selectionoverride")
         column.separator()
         box.prop(cell_props, "fill")
-        box.prop(cell_props, "clearinner")
+        #box.prop(cell_props, "clearinner")
         box.prop(cell_props, "clearouter")
         box.prop(cell_props, "axisthreshold")
         
@@ -274,26 +277,37 @@ class ObjectSelectionProperties(PropertyGroup):
             description="Fill in the cut\nbeware of new faces if used without clear inner or outer",
             default=False,
             )
-    clearinner: BoolProperty(
-            name="Clear Inner",
-            description="Remove geometry behind the plane",
-            default=False,
-            )
-    clearouter: BoolProperty(
-            name="Clear Outer",
-            description="Remove geometry in front of the plane",
-            default=False,
-            )
-    axisthreshold: FloatProperty(
-            name="Axisthreshold:",
-            description="Preserves the geometry along the cutline",
-            default=0.0001,
-            min=0.00001,
-            max=1.0,
-            precision=4,
+
+    #clearinner: BoolProperty(
+     #       name="Clear Inner",
+      #      description="Remove geometry behind the plane",
+       #     default=False,
+        #    )
+
+    #clearouter: BoolProperty(
+     #       name="Clear Outer",
+      #      description="Remove geometry in front of the plane",
+       #     default=False,
+        #    )
+    axisthreshold: IntProperty(
+            name="Number of slices:",
+            description="Selection of the number of slices on the vertical axis",
+            default=1,
+            min=1,
+            max=50,
+            #precision=1,
             )
             
-            
+    #axisthreshold: FloatProperty(
+     #       name="achopijo:",
+      #      description="Preserves the geometry along the cutline",
+       #     default=0.0001,
+        #    min=0.00001,
+         #   max=1.0,
+          #  precision=4,
+           # )
+
+
             
 classes = (
     ObjectSelectionProperties,
