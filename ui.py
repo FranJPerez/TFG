@@ -216,33 +216,42 @@ class OBJECTSELECTION_Panel(Panel):
         
         cell_props = context.window_manager.objectselection_props
         
-        #obj = context.active_object
-        #cell_props.bisecttarget = obj.name
+        obj = context.active_object
+        cell_props.bisecttarget = obj.name
         box.label(text="Select the number of cuts:")
         box.prop(cell_props, "slices")
 
-        box1 = box.box()
-        box1.label(text=obj.name,icon='OBJECT_DATAMODE')
-        cplabeltxt = "Select a cutting plane:"
-        if cell_props.cuttingplane:
-            cplabeltxt = "Selected cutting plane:"
-
-        box.label(text=cplabeltxt)
-        box.prop(cell_props, "cuttingplane")
-        box.prop(cell_props, "rememberselection")
-        box.prop(cell_props, "selectionoverride")
-        column.separator()
-        box.prop(cell_props, "fill")
+        #box1 = box.box()
+        #box1.label(text=obj.name,icon='OBJECT_DATAMODE')
+        #cplabeltxt = "Select a cutting plan:"
+        #if cell_props.cuttingplane:
+            #cplabeltxt = "Selected cutting plane:"
+            
+        
+        #thicknesstxt = "Select material thickness:"
+        #box.label(text=thicknesstxt)
+        
+        box.label(text="Select material thickness:")
+        box.prop(cell_props, "thickness")
+        #box.label(text=cplabeltxt)
+        #box.prop(cell_props, "cuttingplane")
+        #box.prop(cell_props, "rememberselection")
+        #box.prop(cell_props, "selectionoverride")
+        #column.separator()
+        #box.prop(cell_props, "fill")
         #box.prop(cell_props, "clearinner")
-        box.prop(cell_props, "clearouter")
-        box.prop(cell_props, "axisthreshold")
+        #box.prop(cell_props, "clearouter")
+        #box.prop(cell_props, "axisthreshold")
 
-        box.prop(cell_props, "slices")
-		
-		
-        if cell_props.cuttingplane:
-            column.separator()
-            column.operator("mesh.bisectplus", icon='NONE', text="Ready to bisect")
+        #box.prop(cell_props, "slices")
+        
+        
+        
+        
+        
+        #if cell_props.cuttingplane:
+          #  column.separator()
+            #column.operator("mesh.bisectplus", icon='NONE', text="Ready to bisect")
         column.separator()
         column.operator("mesh.bisectplus", icon='NONE', text="Start bisection")
 
@@ -255,21 +264,21 @@ class OBJECTSELECTION_Panel(Panel):
 
 
 class ObjectSelectionProperties(PropertyGroup):
-    bisecttarget: StringProperty(
-            name="",
-            description="Selected Object to be bisected with the cutting plane,\nhas to be a 'Mesh'",
-            )
+#    bisecttarget: StringProperty(
+ #           name="",
+  #          description="Selected Object to be bisected with the cutting plane,\nhas to be a 'Mesh'",
+   #         )
     
-    cuttingplane: PointerProperty(
-            name="",
-            description="Must be a single face Plane Object to cut.",
-            type=bpy.types.Object,
-            )
-    rememberselection: BoolProperty(
-            name="Remember manual selection",
-            description="Your selection before the operation will be restored,\nafter the operation is done.",
-            default=True,
-            )   
+#    cuttingplane: PointerProperty(
+ #           name="",
+  #          description="Must be a single face Plane Object to cut.",
+   #         type=bpy.types.Object,
+    #        )
+#    rememberselection: BoolProperty(
+ #           name="Remember manual selection",
+  #          description="Your selection before the operation will be restored,\nafter the operation is done.",
+   #         default=True,
+    #        )   
     
 #    selectionoverride: BoolProperty(
  #           name="Override selection",
@@ -294,13 +303,13 @@ class ObjectSelectionProperties(PropertyGroup):
       #      description="Remove geometry in front of the plane",
        #     default=False,
         #    )
-    axisthreshold: IntProperty(
-            name="Number of slices:",
-            description="Selection of the number of slices on the vertical axis",
+    thickness: FloatProperty(
+            name="Material thickness",
+            description="Select material thickness",
             default=1,
             min=1,
             max=50,
-            #precision=1,
+            precision=1,
             )
     #Aqui creo las propiedades para la caja que he creado en la interfaz slices.
     slices: IntProperty(
