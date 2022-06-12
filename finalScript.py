@@ -52,7 +52,7 @@ class bisectioner(Operator):
     bl_optons = {"REGISTER", "UNDO"}
     
     @classmethod
-    def polla(cls, context):
+    def poll(cls, context):
         #objs = context.selected_objects
         #return objs != [] and objs[0].type == "MESH"
         #obj = bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
