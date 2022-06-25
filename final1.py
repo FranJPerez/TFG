@@ -86,20 +86,21 @@ class bisectioner(Operator):
         yInicial =ob.dimensions.y
         zInicial =ob.dimensions.z
         
-        numeroCortes=objectselection_props.objectHigh/objectselection_props.thickness
+        grosor = objectselection_props.thickness / 10
+        numeroCortes=objectselection_props.objectHigh/grosor
         
         #Calculo las dimensiones reales.
-        xReal = (objectselection_props.objectHight/zInicial) * xInicial
-        yReal = (objectselection_props.objectHight/zInicial) * yInicial
+        xReal = (objectselection_props.objectHigh/zInicial) * xInicial
+        yReal = (objectselection_props.objectHigh/zInicial) * yInicial
         zReal = objectselection_props.objectHigh
         
         #Calculamos si dicho objeto con los cortes calculados cabera en la lamina.
         #Primero calculamos el espacio en el eje x, que seria el largo de la lamina.
-        if lengthSheet/xReal < xReal:
-            return {'CANCELED'}
+        if objectselection_props.lengthSheet/xReal < xReal:
+            return {'FINISHED'}
         else:
-            if widthSheet/yReal < yReal:
-                return {'CANCELED'}
+            if objectselection_props.widthSheet/yReal < yReal:
+                return {'FINISHED'}
         
         
         
@@ -186,8 +187,8 @@ class ObjectSelectionProperties(PropertyGroup):
 
     thickness: FloatProperty(
             name="Grosor lamina",
-            description="Grosor de la lamina",
-            default=1,
+            description="Grosor de la lamina en mm",
+            default=0.2,
             min=1,
             max=50,
             precision=1,
@@ -203,8 +204,9 @@ class ObjectSelectionProperties(PropertyGroup):
             
     objectHigh: FloatProperty(
             name = "Altura del objeto",
-            description="Altura real que tendra el objeto",
+            description="Altura real que tendra el objeto en cm",
             default=5,
+            min=5,
             max=20,
             precision=2,
             )
@@ -212,7 +214,7 @@ class ObjectSelectionProperties(PropertyGroup):
     lengthSheet: IntProperty(
             name = "Largo de lamina",
             description="Largo de la lamina donde imprimir el objeto en cm",
-            default=10,
+            default=100,
             min=10,
             max=200,
             )
@@ -220,7 +222,7 @@ class ObjectSelectionProperties(PropertyGroup):
     widthSheet: IntProperty(
             name = "Ancho de lamina",
             description="Anchura de la lamina donde imprimir el objeto en cm",
-            default=10,
+            default=100,
             min=10,
             max=200,
             )
