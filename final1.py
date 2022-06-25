@@ -64,6 +64,7 @@ class bisectioner(Operator):
     
     def execute(self, context):
         #print("Hello World")
+        objectselection_props = context.window_manager.objectselection_props
         
         #Primero elimino todos los objetos de la escena y solo dejo el objeto que voy a laminar
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
@@ -85,12 +86,12 @@ class bisectioner(Operator):
         yInicial =ob.dimensions.y
         zInicial =ob.dimensions.z
         
-        numeroCortes=objectHigh/thickness
+        numeroCortes=objectselection_props.objectHigh/objectselection_props.thickness
         
         #Calculo las dimensiones reales.
-        xReal = (objectHight/zInicial) * xInicial
-        yReal = (objectHight/zInicial) * yInicial
-        zReal = objectHigh
+        xReal = (objectselection_props.objectHight/zInicial) * xInicial
+        yReal = (objectselection_props.objectHight/zInicial) * yInicial
+        zReal = objectselection_props.objectHigh
         
         #Calculamos si dicho objeto con los cortes calculados cabera en la lamina.
         #Primero calculamos el espacio en el eje x, que seria el largo de la lamina.
