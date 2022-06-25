@@ -104,20 +104,24 @@ class bisectioner(Operator):
         
         
         
-        bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(0.15, 0.15, 0.30))
+        #bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(0.15, 0.15, 0.30))
+        bpy.ops.mesh.primitive_cube_add(enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(0.4, objectselection_props.thickness, zInicial))
+
         
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
         bpy.context.view_layer.objects.active = bpy.context.scene.objects["Cube"]
 
         #bpy.context.space_data.context = 'MODIFIER' #Me voy a modificadores Esta instruccion parece que no me hace falta
         bpy.ops.object.modifier_add(type='BOOLEAN') #Elijo el modificador boolean
-        bpy.context.object.modifiers["Boolean"].object = bpy.data.objects["Cylinder"] #Selecciono el objeto que lo modifica que es el cilindro
+        #bpy.context.object.modifiers["Boolean"].object = bpy.data.objects["Cylinder"] #Selecciono el objeto que lo modifica que es el cilindro
+        bpy.context.object.modifiers["Boolean"].object = bpy.data.objects["Cube.001"] #Selecciono el objeto que lo modifica que es el cilindro
         
 
         bpy.ops.object.modifier_apply(modifier="Boolean") #Aplico el modificador
         #Selecciono el cilindro y lo elimino
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
-        bpy.context.scene.objects["Cylinder"].select_set(True)  #Selecciono el cilindro
+        #bpy.context.scene.objects["Cylinder"].select_set(True)  #Selecciono el cilindro
+        bpy.context.scene.objects["Cube.001"].select_set(True)  #Selecciono el cilindro
         bpy.ops.object.delete(use_global=False) #lo elimino
 
         #hacer un bisect del objeto
@@ -131,6 +135,13 @@ class bisectioner(Operator):
           #bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN') ESTO CUANDO LOS ORDENE Como el grease pensil
           ######################################
           bpy.ops.mesh.select_all(action='SELECT')
+          
+          
+        #Ordeno las bisecciones
+        #for j in range(20):
+            
+        
+        #Cuando ya tenga ordenadas las bisecciones vuelvo a crear el cubo de eje junto a una base del tamaño del objeto y los ordeno tambien para cortarlos.
         
         return {'FINISHED'}
         #return obj
