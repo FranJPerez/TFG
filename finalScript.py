@@ -52,12 +52,15 @@ class bisectioner(Operator):
     bl_optons = {"REGISTER", "UNDO"}
     
     @classmethod
-    def poll(cls, context):
+    #def poll(cls, context):
         #objs = context.selected_objects
         #return objs != [] and objs[0].type == "MESH"
         #obj = bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
         
-        return obj
+        #return obj
+    def poll(cls, context):
+        objs = context.selected_objects
+        return objs != [] and objs[0].type == "MESH"
     
     def execute(self, context):
         #print("Hello World")
@@ -107,8 +110,8 @@ class bisectioner(Operator):
           numero_pieza = bpy.ops.mesh.bisect(plane_co=(0, 0,(10-j)/10), plane_no=(0,0,1))
           bpy.ops.mesh.separate(type = 'SELECTED') #Separo el objeto que acabo de biseccionar y creo un nuevo objeto xxx.XXX
           #ESTAS DOS INSTRUCCIONES ALOMEJOR TENGO QUE HACERLAS UNA VEZ YA SEAN OBJETOS
-          bpy.ops.object.convert(target='GPENCIL')  #Convierto el objeto a grease pencil para exportarlo a svg para inkscape
-          bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
+          #bpy.ops.object.convert(target='GPENCIL')  #Convierto el objeto a grease pencil para exportarlo a svg para inkscape, ESTO LO TENGO QUE HACER PARA ORDENARLO
+          #bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN') ESTO CUANDO LOS ORDENE Como el grease pensil
           ######################################
           bpy.ops.mesh.select_all(action='SELECT')
         
@@ -145,6 +148,13 @@ class OBJECTSELECTION_Panel(Panel):
         
         column.separator()
         column.operator("mesh.bisectioner", icon='NONE', text="Start bisectioner")
+        
+    @classmethod
+    def poll(cls, context):
+        #using selected_objects to only show the ui if the object is a mesh
+        #and the operation can be done on it
+        objs = context.selected_objects
+        return objs != [] and objs[0].type == "MESH"
         
 
 class ObjectSelectionProperties(PropertyGroup):
