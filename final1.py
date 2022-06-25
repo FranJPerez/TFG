@@ -17,7 +17,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 bl_info = {
-    "name": "Bisect plus",
+    "name": "LOT 9000 (Laminador de Objetos Tridimensionales 9000",
     "author": "Francisco Javier Pérez Heredia",
     "version": (0.1),
     "blender": (2, 80, 0),
@@ -104,7 +104,7 @@ class bisectioner(Operator):
         
         
         
-        bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 2))
+        bpy.ops.mesh.primitive_cylinder_add(vertices=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(0.15, 0.15, 0.30))
         
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
         bpy.context.view_layer.objects.active = bpy.context.scene.objects["Cube"]
@@ -173,7 +173,7 @@ class OBJECTSELECTION_Panel(Panel):
         
         
         column.separator()
-        column.operator("mesh.bisectioner", icon='NONE', text="Start bisectioner")
+        column.operator("mesh.bisectioner", icon='NONE', text="Start LOT 9000")
         
     @classmethod
     def poll(cls, context):
