@@ -77,10 +77,10 @@ class bisectioner(Operator):
         bpy.context.view_layer.objects.active = ob   # Make the cube the active object 
         ob.select_set(True)                          # Select the cube
 
-        #Guardar el tamaño del objeto en X, Y y Z, nos puede ser de utilidad mas tarde
-        xSize =ob.dimensions.x
-        ySize =ob.dimensions.y
-        zSize =ob.dimensions.z
+        #Guardar el tamaño del objeto en X, Y y Z, nos puede ser de utilidad mas tarde ya que son los tamaños iniciales, no reales
+        x0Size =ob.dimensions.x 
+        y0Size =ob.dimensions.y
+        z0Size =ob.dimensions.z
         
         
         
@@ -139,11 +139,20 @@ class OBJECTSELECTION_Panel(Panel):
         
         obj = context.active_object
         cell_props.bisecttarget = obj.name
-        box.label(text="Select the number of cuts:")
+        box.label(text="Selecciona el numero de cortes:")
         box.prop(cell_props, "slices")
         
-        box.label(text="Select material thickness:")
+        box.label(text="Altura del objeto:")
+        box.prop(cell_props, "objectHigh")
+        
+        box.label(text="Grosor de la lamina:")
         box.prop(cell_props, "thickness")
+        
+        box.label(text="Largo de la lamina:")
+        box.prop(cell_props, "lengthSheet")
+        
+        box.label(text="Ancho de la lamina:")
+        box.prop(cell_props, "widthSheet")
         
         
         column.separator()
@@ -175,6 +184,32 @@ class ObjectSelectionProperties(PropertyGroup):
             min=1,
             max=50,
             )
+            
+    objectHigh: FloatProperty(
+            name = "Altura del objeto",
+            description="Altura real que tendra el objeto",
+            default=5,
+            max=20,
+            precision=2,
+            )
+            
+    lengthSheet: IntProperty(
+            name = "Largo de lamina",
+            description="Largo de la lamina donde imprimir el objeto en cm",
+            default=10,
+            min=10,
+            max=200,
+            )
+            
+    widthSheet: IntProperty(
+            name = "Ancho de lamina",
+            description="Anchura de la lamina donde imprimir el objeto en cm",
+            default=10,
+            min=10,
+            max=200,
+            )
+    
+    
 
             
 classes = (
