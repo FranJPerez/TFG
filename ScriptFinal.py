@@ -74,7 +74,7 @@ class bisectioner(Operator):
         bpy.context.scene.objects["Light"].select_set(True)  #Selecciono la luz
         bpy.ops.object.delete(use_global=False) #lo elimino
         
-        ob = bpy.context.scene.objects["Cube"]       # Get the object || Comentario de francisco para intentar en lugar de "Cube" quito las comillas y pongo 0 sin comillas[0]
+        ob = bpy.context.scene.objects[0]       # Get the object || Comentario de francisco para intentar en lugar de "Cube" quito las comillas y pongo 0 sin comillas[0]
         bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
         bpy.context.view_layer.objects.active = ob   # Make the cube the active object 
         ob.select_set(True)                          # Select the cube
@@ -106,6 +106,9 @@ class bisectioner(Operator):
         else:
             if objectselection_props.widthSheet/yReal < yReal:
                 return {'FINISHED'}
+            else:
+                objHorizontales = int(objectselection_props.lengthSheet/xReal)
+                objVerticales = int(objectselection_props.widthSheet/yReal)
         
         
         
@@ -114,7 +117,7 @@ class bisectioner(Operator):
 
         
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
-        bpy.context.view_layer.objects.active = bpy.context.scene.objects["Cube"]
+        bpy.context.view_layer.objects.active = bpy.context.scene.objects[0]
 
         #bpy.context.space_data.context = 'MODIFIER' #Me voy a modificadores Esta instruccion parece que no me hace falta
         bpy.ops.object.modifier_add(type='BOOLEAN') #Elijo el modificador boolean
@@ -133,9 +136,11 @@ class bisectioner(Operator):
         bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
         bpy.context.scene.objects["Cube"].select_set(True) 
         #factorDeCorte = ((objectselection_props.objectHigh * 100) / (zInicial*100))
-        print("EL FACTOR DEEEEEEE CORTE EEEEEEEEEEEEEEEEEEES")
-        print(xReal)
-        #escalado = (factorDeCorte * zInicial) / 100
+        
+        print("OBJETOS HORIZONTALES Y VERTCALES")
+        print(objHorizontales)
+        print(objVerticales)
+        
         escaladoX = ((xReal)/ xInicial)/100
         escaladoY = ((yReal)/ yInicial)/100
         escaladoZ = ((zReal)/ zInicial)/100
@@ -158,11 +163,35 @@ class bisectioner(Operator):
           i += grosor/100 #ahora estaria en mm reales
           
           
-        #Ordeno las bisecciones
-        #for j in range(20):
-            
         
+        #Ordeno las bisecciones
+        #bpy.ops.object.select_all(action='DESELECT') #Deselecciono todo
+        bpy.ops.object.editmode_toggle()#Paso al modo edicion
+        
+        #bpy.context.scene.objects["Cube.004"].select_set(True)  #Selecciono la primera lamina
+        #bpy.context.view_layer.objects.active = bpy.context.scene.objects[1]
+        #bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')  #Hago el centro de la lamina para moverlo
+        #bpy.ops.transform.translate(value=(0, 0, 0.0233431), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        
+        bpy.ops.object.convert(target='GPENCIL')    #La convierto en grease pencil para exportarla a svg
+        j=2
+        ultimaPosX=0
+        ultimaPosY=0
+        for j in range(3):
+            bpy.ops.object.select_all(action='DESELECT')
+            bpy.context.scene.objects[j].select_set(True)  #Selecciono la primera lamina
+            bpy.context.view_layer.objects.active = bpy.context.scene.objects[j]
+            bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')  #Hago el centro de la lamina para moverlo
+            bpy.ops.transform.translate(value=(0, 0, 0.0233431), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+            
+            #bpy.ops.object.convert(target='GPENCIL')    #La convierto en grease pencil para exportarla a svg
+            j += 1
+            bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
+
+            
         #Cuando ya tenga ordenadas las bisecciones vuelvo a crear el cubo de eje junto a una base del tamaño del objeto y los ordeno tambien para cortarlos.
+    
+        
         
         return {'FINISHED'}
         #return obj
