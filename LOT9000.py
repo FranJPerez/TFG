@@ -202,7 +202,7 @@ class bisectioner(Operator):
         escaladoZ = zReal*100 /zInicial
         bpy.ops.transform.resize(value=(escaladoX, escaladoY, escaladoZ), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         #Subo la figura por encima de 0 en el eje z, tengo que arreglar el 2.5
-        bpy.ops.transform.translate(value=(0, 0, 2.5), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        bpy.ops.transform.translate(value=(0, 0, altura/2), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         
         
         xFinal =ob.dimensions.x 
@@ -214,7 +214,7 @@ class bisectioner(Operator):
         
         #Creo la baje y el eje y los renombro
         ejes.crearEjePlano(zFinal/2, 0.5, grosor/2)
-        bpy.ops.transform.translate(value=(0, 0, 2.5), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        bpy.ops.transform.translate(value=(0, 0, altura/2), orient_axis_ortho='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.data.objects['Cube'].name='Eje'
         base.crearBaseSimple(xFinal/2,yFinal/2, grosor)
         bpy.data.objects['Cube'].name='Base'
